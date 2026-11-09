@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Portfólio Profissional</title>
+    <!-- Importa a biblioteca do EJS para funcionar direto no navegador -->
+    <script src="https://jsdelivr.net"></script>
+</head>
+<body>
+
+    <!-- Container onde a página renderizada dinamicamente será injetada -->
+    <div id="portfolio-conteudo"></div>
+
+    <!-- 1. O TEMPLATE HTML COM AS TAGS EJS (<% %> e <%= %>) -->
+    <script type="text/template" id="template-portfolio">
+        <h1>Meu Portfólio / Currículo</h1>
+
+        <h2>Meus Cursos</h2>
+        <ul>
+            <% dados.cursos.forEach(curso => { %>
+                <li><%= curso.nome %> - <%= curso.horas %></li>
+            <% }); %>
+        </ul>
+
+        <h2>Certificados</h2>
+        <ul>
+            <% dados.certificados.forEach(cert => { %>
+                <li><%= cert.titulo %> (<%= cert.ano %>)</li>
+            <% }); %>
+        </ul>
+    </script>
+
+    <!-- 2. O JAVASCRIPT QUE UNE OS DADOS COM O TEMPLATE -->
+    <script>
+        // Objeto de Dados (db) - Centraliza as informações
+        const db = {
+            cursos: [
+                { nome: "Node.js", horas: "40h" },
+                { nome: "React", horas: "30h" },
+                { nome: "JavaScript Avançado", horas: "20h" }
+            ],
+            certificados: [
+                { titulo: "Full Stack", year: 2025, ano: 2025 },
+                { titulo: "Scrum Master", year: 2026, ano: 2026 }
+            ]
+        };
+
+        // Captura o HTML estruturado do template
+        const templateString = document.getElementById('template-portfolio').innerHTML;
+
+        // Renderiza o template injetando o objeto de dados (db) através da variável 'dados'
+        const htmlRenderizado = ejs.render(templateString, { dados: db });
+
+        // Insere o resultado final na tela
+        document.getElementById('portfolio-conteudo').innerHTML = htmlRenderizado;
+    </script>
+
+</body>
+</html>
